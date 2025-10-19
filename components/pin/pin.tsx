@@ -26,14 +26,16 @@ export default function Pin({userId, score, size=100, className, ...props}: PinP
 
     function getStarPath(score: number) {
         let scoreIndex = 0;
-        if (score >= 1 && score <=3) {
+        if (score >= 1 && score <=2) {
             scoreIndex = 1;
-        } else if (score > 3 && score <=9) {
+        } else if (score > 2 && score <=7) {
             scoreIndex = 2;
-        } else if (score > 9 && score <=20) {
+        } else if (score > 7 && score <=15) {
             scoreIndex = 3;
-        } else if (score > 20) {
+        } else if (score > 15 && score <=25) {
             scoreIndex = 4;
+        } else if (score > 25) {
+            scoreIndex = 5;
         }
         const starCount = ["zero", "one", "two", "three", "four", "five"];
         return "/assets/frames/" + starCount[scoreIndex] + "_star_frame.svg";
