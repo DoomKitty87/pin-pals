@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { createHash } from "crypto";
+import { parse } from "path";
 
 interface PinProps extends React.HTMLAttributes<HTMLDivElement> {
     userId: string;
@@ -18,6 +19,10 @@ export default function Pin({userId, score, size=100, className, ...props}: PinP
         return "/assets/characters/" + guy + ".svg";
     }
 
+    function getHatPath(hat: string) {
+        return "/assets/hats/" + hat + ".svg";
+    }
+
     function getStarPath(score: number) {
         let scoreIndex = 0;
         if (score >= 1 && score <=3) {
@@ -33,16 +38,54 @@ export default function Pin({userId, score, size=100, className, ...props}: PinP
         return "/assets/frames/" + starCount[scoreIndex] + "_star_frame.svg";
     }
 
-    const guys = ["chick", "frog", "llama", "pig", "teddy_bear"];
-    const starCount = ["zero", "one", "two", "three", "four", "five"];
+    const guys = [{
+        name: "chick",
+        hatTransform: "translateY(-16%)",
+    }, {
+        name: "frog",
+        hatTransform: "rotate(-15deg) translateY(-17%) scale(0.8) translateX(2%)",
+    }, {
+        name: "llama",
+        hatTransform: "rotate(-8deg) translateY(-22%)",
+    }, {
+        name: "pig",
+        hatTransform: "translateY(-25%)",
+    }, {
+        name: "teddy_bear",
+        hatTransform: "translateY(-22%) rotate(-8deg) scale(0.8)",
+    }]
+    const hats = [{
+        name: "none",
+        transform: "",
+    }, {
+        name: "beanie",
+        transform: "scale(0.2)",
+    }, {
+        name: "bucket-hat",
+        transform: "scale(0.25) rotate(-8deg) translateY(8%)",
+    },
+    {
+        name: "sun-hat-1",
+        transform: "scale(0.3) translateY(13%)",
+    },
+    {
+        name: "sun-hat",
+        transform: "scale(0.3) rotate(-23deg) translateY(15%)",
+    },
+    {
+        name: "witch-hat",
+        transform: "scale(0.25)",
+    }];
+
     const userIdHash = sha256(userId);
     const guyIndex = parseInt(userIdHash.slice(0, 8), 16) % guys.length;
-    
+    const hatIndex = parseInt(userIdHash.slice(16, 24), 16) % hats.length;
 
     return (
         <div className={cn("relative grid gird-rows-1 grid-cols-1" , className)} style={{width: size, height: size}} {...props}>
-            <img className="absolute inset-0" src={getStarPath(score)} style={{ filter: `hue-rotate(${parseInt(userIdHash.slice(8, 16), 16) % 360}deg)` }} alt="Pin Frame" />
-            <img className="absolute inset-0" src={getGuyPath(guys[guyIndex])} alt="Pin" />
+            <img className="absolute inset-0" src={getStarPath(score)} alt="Pin Frame" />
+            <img className="absolute inset-0" src={getGuyPath(guys[guyIndex].name)} style={{ filter: `hue-rotate(${parseInt(userIdHash.slice(8, 16), 16) % 360}deg)` }} alt="Pin" />
+            {hats[hatIndex].name !== "none" ? <img className="absolute inset-0" src={getHatPath(hats[hatIndex].name)} style={{ transform: guys[guyIndex].hatTransform + " " + hats[hatIndex].transform, filter: `hue-rotate(${parseInt(userIdHash.slice(24, 32), 16) % 360}deg)` }} alt="Hat" /> : null}
         </div>
     );
 }
