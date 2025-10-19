@@ -21,7 +21,7 @@ export async function GET() {
   const { data } = await service
     .from('pins')
     .select('*')
-    .eq('user_id', user.id)
+    .or(`user_id.eq.${user.id},other_user_id.eq.${user.id}`)
     .order('times_interacted', { ascending: false })
 
   return Response.json(data)

@@ -25,8 +25,7 @@ export async function POST(request: Request) {
     const { data: existing, error: selectError } = await service
     .from('pins')
     .select('*')
-    .eq('user_id', user.id)
-    .eq('other_user_id', targetId)
+    .or('and(user_id.eq.' + user.id + ',other_user_id.eq.' + targetId + '),and(user_id.eq.' + targetId + ',other_user_id.eq.' + user.id + ')')
     .maybeSingle()
     
     if (selectError) {
@@ -37,7 +36,7 @@ export async function POST(request: Request) {
         // Check if last interaction was too recent
         const now = Math.floor(Date.now() / 1000);
         const timeSinceLastInteraction = now - (existing.last_interaction ?? 0);
-        const MIN_INTERACTION_INTERVAL = 28800; // 8 hours
+        const MIN_INTERACTION_INTERVAL = 60; // 1 minute (temporary for demoing)
         
         if (timeSinceLastInteraction < MIN_INTERACTION_INTERVAL) {
             return Response.json({ error: 'Interaction too recent' }, { status: 429 });
@@ -59,6 +58,10 @@ export async function POST(request: Request) {
         
         return Response.json(data)
     } else {
+        if (targetId === user.id) {
+            return Response.json({ error: 'Cannot interact with yourself' }, { status: 400 })
+        }
+
         const { data, error } = await service
         .from('pins')
         .insert({
