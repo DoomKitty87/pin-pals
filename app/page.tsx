@@ -12,6 +12,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { headers } from "next/headers";
 import { QRClient } from "./qrclient";
+import Pin from "@/components/pin/pin";
 
 export default async function Home() {
   const supabase = await createClient();
