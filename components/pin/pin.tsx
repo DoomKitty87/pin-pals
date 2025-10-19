@@ -1,6 +1,7 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { createHash } from "crypto";
-import { parse } from "path";
+import { useState } from "react";
 
 interface PinProps extends React.HTMLAttributes<HTMLDivElement> {
     userId: string;
@@ -9,11 +10,11 @@ interface PinProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export default function Pin({userId, score, size=100, className, ...props}: PinProps) {
+    const [active, setActive] = useState(false);
 
     function sha256(str: string) {
         return createHash("sha256").update(str).digest("hex");
     }
-
 
     function getGuyPath(guy: string) {
         return "/assets/characters/" + guy + ".svg";
@@ -82,7 +83,7 @@ export default function Pin({userId, score, size=100, className, ...props}: PinP
     const hatIndex = parseInt(userIdHash.slice(16, 24), 16) % hats.length;
 
     return (
-        <div className={cn("relative grid gird-rows-1 grid-cols-1" , className)} style={{width: size, height: size}} {...props}>
+        <div className={cn("relative grid gird-rows-1 grid-cols-1" , className, active && "magnified")} style={{width: size, height: size, transition: 'all 0.25s'}} {...props} onClick={score == 0 ? undefined : () => setActive(!active)}>
             <img className="absolute inset-0" src={getStarPath(score)} alt="Pin Frame" />
             <img className="absolute inset-0" src={getGuyPath(guys[guyIndex].name)} style={{ filter: `hue-rotate(${parseInt(userIdHash.slice(8, 16), 16) % 360}deg)` }} alt="Pin" />
             {hats[hatIndex].name !== "none" ? <img className="absolute inset-0" src={getHatPath(hats[hatIndex].name)} style={{ transform: guys[guyIndex].hatTransform + " " + hats[hatIndex].transform, filter: `hue-rotate(${parseInt(userIdHash.slice(24, 32), 16) % 360}deg)` }} alt="Hat" /> : null}
