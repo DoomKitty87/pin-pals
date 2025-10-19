@@ -86,7 +86,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center">
-      <h1 className="text-6xl font-bold mt-2 mb-0" style={{ color: '#6b3d00', textShadow: '-5px 5px 0 #806742', fontSize: '80px', zIndex: 1 }}>Pin Pals!</h1>
+      <h1 className="text-6xl font-bold mt-5 mb-2" style={{ color: '#6b3d00', textShadow: '-5px 5px 0 #806742', fontSize: '80px', zIndex: 1 }}>Pin Pals!</h1>
         {!pinsRes.ok ? (
             <div className="text-red-600">Error fetching pins: {pinsRes.status} {pinsData?.error}</div>
           ) : ( 

@@ -59,12 +59,12 @@ export default function PinManager({initialPins, userId, cookie}: PinManagerProp
             <QRClient targetId={userId} />
           </FlippableCardSide>
         </FlippableCard>
-        <label className="m-1 text-[20px]">Press To Flip!</label>
+        <label className="m-1 text-[20px]" style={{ marginBottom: "10px"}}>Press To Flip!</label>
       </div>
 
       <Card className="w-5/6 max-w-3xl mb-4">
         <CardHeader>
-          <CardTitle className="text-2xl mb-0" style={{ marginBottom: '-35px' }}>My Collection</CardTitle>
+          <CardTitle className="text-2xl mb-0" style={{ marginBottom: '-35px', marginTop: '-5px'}}>My Collection</CardTitle>
         </CardHeader>
         <div style={{ padding: '20px'}}>
             <ul className="grid gap-3 grid-cols-3">
