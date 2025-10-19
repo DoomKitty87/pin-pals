@@ -115,7 +115,7 @@ export default async function Home() {
             <div>{
                 <ul className="grid gap-3 grid-cols-3">
                   {pinsData.map((pin: any, idx: number) => (
-                    <li key={idx}><Pin userId={pin.other_user_id} size={100} score={pin.times_interacted} /></li>
+                    <li key={idx}><Pin userId={pin.other_user_id === data.user.id ? pin.user_id : pin.other_user_id} size={100} score={pin.times_interacted} /></li>
                   ))}
                 </ul>
             }</div>
