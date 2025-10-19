@@ -90,24 +90,28 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center">
+
       <FlippableCard>
         <FlippableCardSide side={CardSide.FRONT} >
-          <Card style={{ padding: '20px', marginTop: '8px', marginBottom: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Card className="p-5 mt-2 mb 5 flex flex-col items-center" >
             <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
               <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My Pin</CardTitle>
             </CardHeader>
             <Pin userId={data.user.id} size={300} score={0} />
           </Card>
         </FlippableCardSide>
+
         <FlippableCardSide side={CardSide.BACK} >
-          <Card style={{ padding: '20px', marginTop: '40px', marginBottom: '13px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Card className="flex flex-col">
             <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
               <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My QR Code</CardTitle>
             </CardHeader>
             <QRClient targetId={data.user.id} />
           </Card>
         </FlippableCardSide>
+
       </FlippableCard>
+
       <h1 className="text-6xl font-bold mt-0 mb-0" style={{ color: '#6b3d00', textShadow: '-5px 5px 0 #806742', fontSize: '80px', zIndex: 1 }}>Pin Pals!</h1>
       <Card className="w-5/6 max-w-3xl mb-4">
         <CardHeader>

@@ -14,7 +14,7 @@ interface FlippableCardSideProps {
 export default function FlippableCardSide({ children, side, className }: FlippableCardSideProps) {
 
     return (
-        <div className={cn("absolute w-full h-full backface-hidden", {"[transform:rotateY(180deg)]": side === CardSide.BACK}, className)}>
+        <div className={cn("absolute w-full h-full [backface-visibility:hidden]", {"[transform:rotateY(180deg)]": side === CardSide.BACK}, className)}>
             {children}
         </div>
     );
