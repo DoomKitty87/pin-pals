@@ -53,7 +53,9 @@ export default function PinManager({initialPins, userId, cookie}: PinManagerProp
       <div className="mt-3 mb-3 flex flex-col items-center">
         <FlippableCard onFlip={handleFlip} className="w-[300px] h-[300px] flex flex-col items-center text-center text-2x1">
           <FlippableCardSide side={CardSide.FRONT} >
-            <Pin userId={userId} size={300} score={0} />
+            <div className="relative -top-2 mb-2 text-2xl font-bold">
+              <Pin userId={userId} size={300} score={0} />
+            </div>
           </FlippableCardSide>
           <FlippableCardSide side={CardSide.BACK} >
             <QRClient targetId={userId} />
