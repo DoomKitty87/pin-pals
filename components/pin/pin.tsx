@@ -4,11 +4,10 @@ import { createHash } from "crypto";
 interface PinProps extends React.HTMLAttributes<HTMLDivElement> {
     userId: string;
     score: number;
-    height?: number | string;
-    width?: number | string;
+    size?: number | string;
 }
 
-export default function Pin({userId, score, height, width, className, ...props}: PinProps) {
+export default function Pin({userId, score, size=100, className, ...props}: PinProps) {
 
     function sha256(str: string) {
         return createHash("sha256").update(str).digest("hex");
@@ -41,9 +40,9 @@ export default function Pin({userId, score, height, width, className, ...props}:
     
 
     return (
-        <div className={cn("relative grid gird-rows-1 grid-cols-1" , className)} style={{height, width}}>
-            <img src={getStarPath(score)} alt="Pin Frame" />
-            <img src={getGuyPath(guys[guyIndex])} alt="Pin" />
+        <div className={cn("relative grid gird-rows-1 grid-cols-1" , className)} style={{width: size, height: size}} {...props}>
+            <img className="absolute inset-0" src={getStarPath(score)} alt="Pin Frame" />
+            <img className="absolute inset-0" src={getGuyPath(guys[guyIndex])} alt="Pin" />
 
         </div>
     );

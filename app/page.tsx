@@ -14,6 +14,7 @@ import { headers } from "next/headers";
 import { QRClient } from "./qrclient";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { LogoutButton } from "@/components/logout-button";
+import Pin from "@/components/pin/pin";
 
 export default async function Home() {
   const supabase = await createClient();
