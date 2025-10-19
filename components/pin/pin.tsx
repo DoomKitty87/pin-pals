@@ -43,7 +43,6 @@ export default function Pin({userId, score, size=100, className, ...props}: PinP
         <div className={cn("relative grid gird-rows-1 grid-cols-1" , className)} style={{width: size, height: size}} {...props}>
             <img className="absolute inset-0" src={getStarPath(score)} alt="Pin Frame" />
             <img className="absolute inset-0" src={getGuyPath(guys[guyIndex])} alt="Pin" />
-
         </div>
     );
 }

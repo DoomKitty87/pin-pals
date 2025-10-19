@@ -99,13 +99,25 @@ export default async function Home() {
         <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
           <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My Pin</CardTitle>
         </CardHeader>
-        <img src="/path/to/pin/image.png" width="300px" height="300px" alt="My Pin" />
+        <Pin userId={data.user.id} size={300} score={0} />
       </Card>
       <Card className="w-5/6 max-w-3xl mb-4">
         <CardHeader>
-          <CardTitle className="text-2xl mb-4">My Pins</CardTitle>
+          <CardTitle className="text-2xl mb-0" style={{ marginBottom: '-35px' }}>My Pins</CardTitle>
         </CardHeader>
-        {/* TODO: Pin Display Component */}
+        <div style={{ padding: '20px'}}>
+          {!pinsRes.ok ? (
+            <div className="text-red-600">Error fetching pins: {pinsRes.status} {pinsData?.error}</div>
+          ) : (
+            <div>{
+                <ul className="grid gap-3 grid-cols-3">
+                  {pinsData.map((pin: any, idx: number) => (
+                    <li key={idx}><Pin userId={pin.other_user_id} size={100} score={pin.times_interacted} /></li>
+                  ))}
+                </ul>
+            }</div>
+          )}
+        </div>
       </Card>
       <div style={{ marginBottom: '15px' }}>
         <LogoutButton />
