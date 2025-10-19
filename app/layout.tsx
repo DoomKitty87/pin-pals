@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Jua } from "next/font/google";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -8,14 +8,15 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Pin Pals",
+  description: "A fun way to connect with friends using QR codes and pins!",
 };
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const jua = Jua({
+  variable: "--font-jua",
   display: "swap",
   subsets: ["latin"],
+  weight: ["400"],
 });
 
 export default function RootLayout({
@@ -25,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.className} antialiased`}>
+      <body className={`${jua.className} antialiased`}>
         {children}
       </body>
     </html>
