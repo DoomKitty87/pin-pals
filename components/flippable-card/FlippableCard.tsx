@@ -18,7 +18,7 @@ export default function FlippableCard({children, className}: FlippableCardProps)
 
     return (
         <div className={cn("group [perspective:1000px] ", className)} onClick={toggleFlip}>
-            <div className={cn("relative h-[300px] w-[300px] transitions-all duration-500 [transform-style:preserve-3d]", {"[transform:rotateY(180deg)]": isFlipped})}>
+            <div className={cn("relative w-full h-full transition-all duration-500 [transform-style:preserve-3d]", {"[transform:rotateY(180deg)]": isFlipped})}>
                 {children}
             </div>
         </div>

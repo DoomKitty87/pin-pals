@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { headers } from "next/headers";
-import { QRClient } from "./qrclient";
+import QRClient from "./qrclient";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { LogoutButton } from "@/components/logout-button";
 import Pin from "@/components/pin/pin";
@@ -91,23 +91,13 @@ export default async function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center">
 
-      <FlippableCard>
+      <FlippableCard className="w-[300px] h-[300px] mt-10 mb-10 flex flex-col items-center text-center text-2x1">
         <FlippableCardSide side={CardSide.FRONT} >
-          <Card className="p-5 mt-2 mb 5 flex flex-col items-center" >
-            <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
-              <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My Pin</CardTitle>
-            </CardHeader>
             <Pin userId={data.user.id} size={300} score={0} />
-          </Card>
         </FlippableCardSide>
 
         <FlippableCardSide side={CardSide.BACK} >
-          <Card className="flex flex-col">
-            <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
-              <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My QR Code</CardTitle>
-            </CardHeader>
             <QRClient targetId={data.user.id} />
-          </Card>
         </FlippableCardSide>
 
       </FlippableCard>
