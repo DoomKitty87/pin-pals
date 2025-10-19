@@ -90,22 +90,23 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center">
+      <h1 className="text-6xl font-bold mt-2 mb-0" style={{ color: '#6b3d00', textShadow: '-5px 5px 0 #806742', fontSize: '80px', zIndex: 1 }}>Pin Pals!</h1>
 
-      <FlippableCard className="w-[300px] h-[300px] mt-10 mb-10 flex flex-col items-center text-center text-2x1">
-        <FlippableCardSide side={CardSide.FRONT} >
+      <div className="mt-3 mb-3 flex flex-col items-center">
+        <FlippableCard className="w-[300px] h-[300px] flex flex-col items-center text-center text-2x1">
+          <FlippableCardSide side={CardSide.FRONT} >
             <Pin userId={data.user.id} size={300} score={0} />
-        </FlippableCardSide>
-
-        <FlippableCardSide side={CardSide.BACK} >
+          </FlippableCardSide>
+          <FlippableCardSide side={CardSide.BACK} >
             <QRClient targetId={data.user.id} />
-        </FlippableCardSide>
+          </FlippableCardSide>
+        </FlippableCard>
+        <label className="m-1 text-[20px]">Click To Flip!</label>
+      </div>
 
-      </FlippableCard>
-
-      <h1 className="text-6xl font-bold mt-0 mb-0" style={{ color: '#6b3d00', textShadow: '-5px 5px 0 #806742', fontSize: '80px', zIndex: 1 }}>Pin Pals!</h1>
       <Card className="w-5/6 max-w-3xl mb-4">
         <CardHeader>
-          <CardTitle className="text-2xl mb-0" style={{ marginBottom: '-35px' }}>My Pins</CardTitle>
+          <CardTitle className="text-2xl mb-0" style={{ marginBottom: '-35px' }}>My Collection</CardTitle>
         </CardHeader>
         <div style={{ padding: '20px'}}>
           {!pinsRes.ok ? (

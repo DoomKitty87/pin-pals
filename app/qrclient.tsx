@@ -23,7 +23,7 @@ export default function QRClient({targetId}: QRClientProps) {
     const container = containerRef.current;
     if (container) {
       const newSize = Math.min(container.offsetHeight, container.offsetWidth);
-      setSize(newSize - 40);
+      setSize(newSize - 5);
     }
 
     return () => clearInterval(interval);
