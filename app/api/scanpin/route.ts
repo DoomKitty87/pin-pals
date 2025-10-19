@@ -25,8 +25,7 @@ export async function POST(request: Request) {
     const { data: existing, error: selectError } = await service
     .from('pins')
     .select('*')
-    .eq('user_id', user.id)
-    .eq('other_user_id', targetId)
+    .or('and(user_id.eq.' + user.id + ',other_user_id.eq.' + targetId + '),and(user_id.eq.' + targetId + ',other_user_id.eq.' + user.id + ')')
     .maybeSingle()
     
     if (selectError) {
