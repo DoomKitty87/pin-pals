@@ -38,6 +38,7 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: 'Jua', sans-serif;
   }
 
   body {
