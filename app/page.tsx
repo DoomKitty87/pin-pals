@@ -6,6 +6,8 @@ import { QRClient } from "./qrclient";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { LogoutButton } from "@/components/logout-button";
 import Pin from "@/components/pin/pin";
+import FlippableCard from "@/components/flippable-card/FlippableCard";
+import FlippableCardSide, { CardSide } from "@/components/flippable-card/FlippableCardSide";
 
 export default async function Home() {
   const supabase = await createClient();
@@ -88,19 +90,25 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center">
-      <Card style={{ padding: '20px', marginTop: '40px', marginBottom: '13px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
-          <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My QR Code</CardTitle>
-        </CardHeader>
-        <QRClient targetId={data.user.id} />
-      </Card>
+      <FlippableCard>
+        <FlippableCardSide side={CardSide.FRONT} >
+          <Card style={{ padding: '20px', marginTop: '8px', marginBottom: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
+              <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My Pin</CardTitle>
+            </CardHeader>
+            <Pin userId={data.user.id} size={300} score={0} />
+          </Card>
+        </FlippableCardSide>
+        <FlippableCardSide side={CardSide.BACK} >
+          <Card style={{ padding: '20px', marginTop: '40px', marginBottom: '13px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
+              <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My QR Code</CardTitle>
+            </CardHeader>
+            <QRClient targetId={data.user.id} />
+          </Card>
+        </FlippableCardSide>
+      </FlippableCard>
       <h1 className="text-6xl font-bold mt-0 mb-0" style={{ color: '#6b3d00', textShadow: '-5px 5px 0 #806742', fontSize: '80px', zIndex: 1 }}>Pin Pals!</h1>
-      <Card style={{ padding: '20px', marginTop: '8px', marginBottom: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
-          <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My Pin</CardTitle>
-        </CardHeader>
-        <Pin userId={data.user.id} size={300} score={0} />
-      </Card>
       <Card className="w-5/6 max-w-3xl mb-4">
         <CardHeader>
           <CardTitle className="text-2xl mb-0" style={{ marginBottom: '-35px' }}>My Pins</CardTitle>
