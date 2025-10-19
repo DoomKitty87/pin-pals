@@ -15,7 +15,7 @@ export default async function ProtectedPage() {
 
   // Call the internal API route to fetch user pins. Forward cookies so
   // the route handler can authenticate the request via next/headers.
-  const cookieHeader = cookies().toString();
+  const cookieHeader = (await cookies()).toString();
   const pinsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ''}/api/getpins`, {
     headers: {
       cookie: cookieHeader,
@@ -30,6 +30,8 @@ export default async function ProtectedPage() {
   } catch (e) {
     pinsData = { error: 'Invalid JSON response from /api/getpins' };
   }
+
+  console.log('Fetched pins data:', pinsData);
 
   return (
     <div className="flex-1 w-full flex flex-col gap-12">
