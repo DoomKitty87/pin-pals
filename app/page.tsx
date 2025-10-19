@@ -16,21 +16,29 @@ import { QRClient } from "./qrclient";
 export default async function Home() {
   const supabase = await createClient();
 
-  // Make sure user is logged in
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data.user) {
-    console.log("User not logged in");
-    redirect("/auth/login");
-  } else {
-    console.log("User is logged in:", data.user);
-  }
-  const cookieHeader = (await cookies()).toString();
-
   // Check if the request url includes any query params (if user scanned a qr code)
   const fullUrl = (await headers()).get("x-url");
   const url = new URL(fullUrl || process.env.NEXT_PUBLIC_BASE_URL || '');
   const urlParams = url.searchParams
   console.log("URL Params:", urlParams.toString());
+
+  // Make sure user is logged in
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data.user) {
+    console.log("User not logged in");
+    if (urlParams.has("targetId") && urlParams.has("timestamp")) {
+      console.log("Redirecting to login with targetId and timestamp");
+      const targetId = urlParams.get("targetId");
+      const timestamp = urlParams.get("timestamp");
+      redirect(`/auth/login?targetId=${targetId}&timestamp=${timestamp}`);
+    } else {
+      redirect("/auth/login");
+    }
+  } else {
+    console.log("User is logged in:", data.user);
+  }
+  const cookieHeader = (await cookies()).toString();
+
   if (urlParams.has("targetId") && urlParams.has("timestamp")) {
     const targetId = urlParams.get("targetId");
     const timestamp = urlParams.get("timestamp");
