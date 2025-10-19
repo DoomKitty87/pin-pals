@@ -101,7 +101,7 @@ export default async function Home() {
             <QRClient targetId={data.user.id} />
           </FlippableCardSide>
         </FlippableCard>
-        <label className="m-1 text-[20px]">Click To Flip!</label>
+        <label className="m-1 text-[20px]">Press To Flip!</label>
       </div>
 
       <Card className="w-5/6 max-w-3xl mb-4">
