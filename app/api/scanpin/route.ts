@@ -60,7 +60,7 @@ export async function POST(request: Request) {
         return Response.json(data)
     } else {
         const { data, error } = await service
-        .from('user_interactions')
+        .from('pins')
         .insert({
             user_id: user.id,
             other_user_id: targetId,
