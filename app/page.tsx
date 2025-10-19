@@ -46,7 +46,7 @@ export default async function Home() {
       console.log("QR code timestamp is valid.");
       
       // Call route to log interaction
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ''}/api/scanpin`, {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ''}/api/scanpin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
