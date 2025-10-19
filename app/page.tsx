@@ -8,13 +8,9 @@ import { SignUpUserSteps } from "@/components/tutorial/sign-up-user-steps";
 import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
 
-import { useRouter } from "next/navigation";
 
 export default function Home() {
 
-  const handleRedirectTest = () => { 
-    useRouter().push("/auth/login");
-  }
 
   return (
     <main className="min-h-screen flex flex-col items-center">
