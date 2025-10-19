@@ -15,12 +15,14 @@ export async function GET() {
       { status: 401 },
     )
   }
-  console.log(user.id)
+
   const service = await createServiceClient()
 
   const { data } = await service
     .from('pins')
     .select('*')
     .eq('user_id', user.id)
+    .order('times_interacted', { ascending: false })
+
   return Response.json(data)
 }

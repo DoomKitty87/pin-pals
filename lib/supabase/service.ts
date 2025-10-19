@@ -1,3 +1,4 @@
+'use server';
 import {createServerClient} from '@supabase/ssr';
 
 export async function createServiceClient() {

@@ -10,7 +10,7 @@ export async function updateSession(request: NextRequest) {
   // If the env vars are not set, skip middleware check. You can remove this
   // once you setup the project.
   if (!hasEnvVars) {
-    return supabaseResponse;
+    return NextResponse.next({ request });
   }
 
   // With Fluid compute, don't put this client in a global environment
@@ -58,6 +58,9 @@ export async function updateSession(request: NextRequest) {
     url.pathname = "/auth/login";
     return NextResponse.redirect(url);
   }
+
+  supabaseResponse.headers.set("x-url", request.url);
+  console.log("Hi from middleware!", request.url);
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.
   // If you're creating a new response object with NextResponse.next() make sure to:
