@@ -48,7 +48,7 @@ export default function PinManager({initialPins, userId, cookie}: PinManagerProp
     };
 
     return (
-    <div>
+    <div className="flex flex-col items-center w-full">
 
       <div className="mt-3 mb-3 flex flex-col items-center">
         <FlippableCard onFlip={handleFlip} className="w-[300px] h-[300px] flex flex-col items-center text-center text-2x1">
