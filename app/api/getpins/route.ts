@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { cookies } from 'next/headers'
+import { createServiceClient } from '@/lib/supabase/service'
 
 export async function GET() {
   const supabase = await createClient()
@@ -15,12 +15,12 @@ export async function GET() {
       { status: 401 },
     )
   }
+  console.log(user.id)
+  const service = await createServiceClient()
 
-  const { data } = await supabase
+  const { data } = await service
     .from('pins')
-    .select('pins')
+    .select('*')
     .eq('user_id', user.id)
-    .single()
-
   return Response.json(data)
 }
