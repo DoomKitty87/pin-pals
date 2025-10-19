@@ -102,7 +102,7 @@ export default async function Home() {
         </CardHeader>
         <QRClient targetId={data.user.id} />
       </Card>
-      <Card className="w-full max-w-3xl mb-4 ml-4 mr-4">
+      <Card className="w-5/6 max-w-3xl mb-4">
         <CardHeader>
           <CardTitle className="text-2xl mb-4">My Pins</CardTitle>
         </CardHeader>
