@@ -34,7 +34,6 @@ export default async function Home() {
     console.log("User is logged in:", data.user);
   }
   const cookieHeader = (await cookies()).toString();
-  let tooRecent = false;
 
   if (urlParams.has("targetId") && urlParams.has("timestamp")) {
     const targetId = urlParams.get("targetId");
@@ -63,12 +62,8 @@ export default async function Home() {
       .then(res => res.json())
       .then(data => {
         console.log("Logged interaction successfully:", data);
-        if (data.error === 'Interaction too recent') {
-          tooRecent = true
-        }
       })
       .catch(err => {
-        alert("Error logging interaction: " + err.message);
         console.error("Error logging interaction:", err);
       });
     }
@@ -95,13 +90,24 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center">
-      {tooRecent ? <div className="text-red-600 mb-4" style={{ textAlign: 'center', backgroundColor: '#ffe6e6', padding: '10px', margin: '20px', borderRadius: '5px', position: 'fixed' }}>You have already interacted with this user recently. Please wait before scanning again.</div> : null}
-      <Card style={{ padding: '20px', marginTop: '40px', marginBottom: '13px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
-          <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My QR Code</CardTitle>
-        </CardHeader>
-        <QRClient targetId={data.user.id} />
-      </Card>
+      <FlippableCard>
+        <FlippableCardSide side={CardSide.FRONT} >
+          <Card style={{ padding: '20px', marginTop: '8px', marginBottom: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
+              <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My Pin</CardTitle>
+            </CardHeader>
+            <Pin userId={data.user.id} size={300} score={0} />
+          </Card>
+        </FlippableCardSide>
+        <FlippableCardSide side={CardSide.BACK} >
+          <Card style={{ padding: '20px', marginTop: '40px', marginBottom: '13px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
+              <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My QR Code</CardTitle>
+            </CardHeader>
+            <QRClient targetId={data.user.id} />
+          </Card>
+        </FlippableCardSide>
+      </FlippableCard>
       <h1 className="text-6xl font-bold mt-0 mb-0" style={{ color: '#6b3d00', textShadow: '-5px 5px 0 #806742', fontSize: '80px', zIndex: 1 }}>Pin Pals!</h1>
       <Card className="w-5/6 max-w-3xl mb-4">
         <CardHeader>
