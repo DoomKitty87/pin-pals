@@ -32,6 +32,7 @@ export default async function Home() {
     console.log("User is logged in:", data.user);
   }
   const cookieHeader = (await cookies()).toString();
+  let tooRecent = false;
 
   if (urlParams.has("targetId") && urlParams.has("timestamp")) {
     const targetId = urlParams.get("targetId");
@@ -60,8 +61,12 @@ export default async function Home() {
       .then(res => res.json())
       .then(data => {
         console.log("Logged interaction successfully:", data);
+        if (data.error === 'Interaction too recent') {
+          tooRecent = true
+        }
       })
       .catch(err => {
+        alert("Error logging interaction: " + err.message);
         console.error("Error logging interaction:", err);
       });
     }
@@ -88,6 +93,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center">
+      {tooRecent ? <div className="text-red-600 mb-4" style={{ textAlign: 'center', backgroundColor: '#ffe6e6', padding: '10px', margin: '20px', borderRadius: '5px', position: 'fixed' }}>You have already interacted with this user recently. Please wait before scanning again.</div> : null}
       <Card style={{ padding: '20px', marginTop: '40px', marginBottom: '13px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
           <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My QR Code</CardTitle>

@@ -36,7 +36,7 @@ export async function POST(request: Request) {
         // Check if last interaction was too recent
         const now = Math.floor(Date.now() / 1000);
         const timeSinceLastInteraction = now - (existing.last_interaction ?? 0);
-        const MIN_INTERACTION_INTERVAL = 28800; // 8 hours
+        const MIN_INTERACTION_INTERVAL = 60; // 1 minute (temporary for demoing)
         
         if (timeSinceLastInteraction < MIN_INTERACTION_INTERVAL) {
             return Response.json({ error: 'Interaction too recent' }, { status: 429 });
