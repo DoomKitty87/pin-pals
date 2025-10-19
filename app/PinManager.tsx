@@ -53,7 +53,7 @@ export default function PinManager({initialPins, userId, cookie}: PinManagerProp
       <div className="mt-3 mb-3 flex flex-col items-center">
         <FlippableCard onFlip={handleFlip} className="w-[300px] h-[300px] flex flex-col items-center text-center text-2x1">
           <FlippableCardSide side={CardSide.FRONT} >
-            <Pin userId={userId} size={300} score={0} />
+            <Pin userId={userId} size={300} score={0} allowMagnify={false} />
           </FlippableCardSide>
           <FlippableCardSide side={CardSide.BACK} >
             <QRClient targetId={userId} />
@@ -69,7 +69,7 @@ export default function PinManager({initialPins, userId, cookie}: PinManagerProp
         <div style={{ padding: '20px'}}>
             <ul className="grid gap-3 grid-cols-3">
                 {pins.map((pin: any, idx: number) => (
-                    <li key={idx}><Pin userId={pin.other_user_id === userId ? pin.user_id : pin.other_user_id} size={100} score={pin.times_interacted} /></li>
+                    <li key={idx}><Pin allowMagnify={true} userId={pin.other_user_id === userId ? pin.user_id : pin.other_user_id} size={100} score={pin.times_interacted} /></li>
                 ))}
             </ul>
             
