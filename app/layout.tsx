@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Jua } from "next/font/google";
+import { Jua } from "next/font/google";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
