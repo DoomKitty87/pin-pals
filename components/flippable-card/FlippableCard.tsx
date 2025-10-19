@@ -6,13 +6,16 @@ import { cn } from "@/lib/utils";
 interface FlippableCardProps {
     children : React.ReactNode;
     className?: string;
+    onFlip?: (isFlipped: boolean) => void;
 }
 
-export default function FlippableCard({children, className}: FlippableCardProps) {
+export default function FlippableCard({children, className, onFlip}: FlippableCardProps) {
     const [isFlipped, setIsFlipped] = useState(false);
 
     const toggleFlip = () => {
-        setIsFlipped(!isFlipped);
+        const nextFlippedState = !isFlipped;
+        setIsFlipped(nextFlippedState);
+        onFlip?.(nextFlippedState);
     };
 
 
