@@ -23,10 +23,8 @@ interface PinManagerProps {
 
 export default function PinManager({initialPins, userId, cookie}: PinManagerProps) {
     const [pins, setPins] = useState<PinType[]>(initialPins);
-    const [isLoading, setIsLoading] = useState(false);
 
     const refetchPins = async () => {
-        setIsLoading(true);
         const pinsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ''}/api/getpins`, {
             headers: {
             cookie: cookie,
@@ -40,9 +38,7 @@ export default function PinManager({initialPins, userId, cookie}: PinManagerProp
             console.log('Refetched pins data:', pinsData);
         } catch (e) {
             pinsData = { error: 'Invalid JSON response from /api/getpins' };
-        } finally {
-            setIsLoading(false);
-        }
+        } 
     };
 
     const handleFlip = (isFlipped: boolean) => {
@@ -71,17 +67,12 @@ export default function PinManager({initialPins, userId, cookie}: PinManagerProp
           <CardTitle className="text-2xl mb-0" style={{ marginBottom: '-35px' }}>My Collection</CardTitle>
         </CardHeader>
         <div style={{ padding: '20px'}}>
-          {isLoading ? (
-            <div className="text-red-600">Loading pins...</div>
-          ) : (
-            <div>{
-                <ul className="grid gap-3 grid-cols-3">
-                  {pins.map((pin: any, idx: number) => (
+            <ul className="grid gap-3 grid-cols-3">
+                {pins.map((pin: any, idx: number) => (
                     <li key={idx}><Pin userId={pin.other_user_id === userId ? pin.user_id : pin.other_user_id} size={100} score={pin.times_interacted} /></li>
-                  ))}
-                </ul>
-            }</div>
-          )}
+                ))}
+            </ul>
+            
         </div>
       </Card>
     </div>
