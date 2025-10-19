@@ -96,7 +96,8 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center">
-      <Card style={{ padding: '20px', marginTop: '40px', marginBottom: '40px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <h1 className="text-6xl font-bold mt-5" style={{ color: '#6b3d00'}}>Pin Pals!</h1>
+      <Card style={{ padding: '20px', marginTop: '20px', marginBottom: '40px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <CardHeader style={{ padding: '0', marginBottom: '-20px' }}>
           <CardTitle className="text-2xl mb-4" style={{ textAlign: 'center' }}>My QR Code</CardTitle>
         </CardHeader>
