@@ -38,9 +38,28 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: 'Jua', sans-serif;
   }
 
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Added to implement swiping up and down between pin showcase, QR code, and pin inventory pages */
+html, body, #root {
+  height: 100%;
+}
+
+:root {
+  /* optional: smoother momentum on iOS */
+  overscroll-behavior-y: contain;
+}
+
+.snap-y {
+  scroll-snap-type: y mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
 }
