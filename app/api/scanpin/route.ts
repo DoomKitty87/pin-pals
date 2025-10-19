@@ -58,6 +58,10 @@ export async function POST(request: Request) {
         
         return Response.json(data)
     } else {
+        if (targetId === user.id) {
+            return Response.json({ error: 'Cannot interact with yourself' }, { status: 400 })
+        }
+
         const { data, error } = await service
         .from('pins')
         .insert({
