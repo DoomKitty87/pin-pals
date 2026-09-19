@@ -1,17 +1,18 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { createHash } from "crypto";
-import { parse } from "path";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface PinProps extends React.HTMLAttributes<HTMLDivElement> {
     userId: string;
     score: number;
+    allowMagnify: boolean;
     size?: number | string;
 }
 
-export default function Pin({userId, score, size=100, className, ...props}: PinProps) {
+export default function Pin({userId, score, size=100, className, allowMagnify, ...props}: PinProps) {
     const [active, setActive] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     function sha256(str: string) {
         return createHash("sha256").update(str).digest("hex");
@@ -121,12 +122,64 @@ export default function Pin({userId, score, size=100, className, ...props}: PinP
     const hatIndex = parseInt(userIdHash.slice(16, 24), 16) % hats.length;
     const accessoryIndex = parseInt(userIdHash.slice(32, 40), 16) % accessories.length;
 
-    return (
-        <div className={cn("relative grid gird-rows-1 grid-cols-1" , className, active && "magnified")} style={{width: size, height: size, transition: 'all 0.25s'}} {...props} onClick={score == 0 ? undefined : () => setActive(!active)}>
+
+    const PinContent = (
+     <>
             <img className="absolute inset-0" src={getStarPath(score)} alt="Pin Frame" />
             <img className="absolute inset-0" src={getGuyPath(guys[guyIndex].name)} style={{ filter: `hue-rotate(${parseInt(userIdHash.slice(8, 16), 16) % 360}deg)` }} alt="Pin" />
             {hats[hatIndex].name !== "none" ? <img className="absolute inset-0" src={getHatPath(hats[hatIndex].name)} style={{ transform: guys[guyIndex].hatTransform + " " + hats[hatIndex].transform, filter: `hue-rotate(${parseInt(userIdHash.slice(24, 32), 16) % 360}deg)` }} alt="Hat" /> : null}
             {accessories[accessoryIndex].name !== "none" ? <img className="absolute inset-0" src={getAccessoryPath(accessories[accessoryIndex].name)} style={{ transform: guys[guyIndex].accessoryTransform + " " + accessories[accessoryIndex].transform, filter: `hue-rotate(${parseInt(userIdHash.slice(40, 48), 16) % 360}deg)` }} alt="Accessory" /> : null}
-        </div>
+     </>   
+    );
+
+    useEffect(() => {
+        if (active) {
+            const timer = setTimeout(() => setIsAnimating(true), 10);
+            return () => clearTimeout(timer);
+        } else {
+
+            setIsAnimating(false);
+        }
+    }, [active]);
+
+    return (
+        <>
+            {active && (
+                <div onClick={() => setActive(false)} className={cn("fixed inset-0 bg-black/70 z-[50] transition-opactiy duration-300", isAnimating ? "opacity-100": "opacity-0")}/>
+            )}
+            <div className={cn(
+                "relative grid gird-rows-1 gird-cols-1", 
+                "transition-opacity duration-300",
+                {"opacity-0": active},
+                    className
+                )}
+                style={{width: size, height: size}}
+                onClick={allowMagnify ? () => setActive(!active) : undefined}
+                {...props}
+            >
+                {PinContent}
+            </div>
+
+            {active && (
+                <div
+                     className={cn(
+                        // Base styles for the magnified version: fixed, centered, and initially hidden
+                        "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60]",
+                        "transition-all duration-300 ease-in-out",
+                        // The two states for the animation:
+                        // Start: small and transparent
+                        "scale-0 opacity-0",
+                        // End: large and opaque (applied when `isAnimating` is true)
+                        { "scale-[3] opacity-100": isAnimating }
+                    )}
+                    onClick={allowMagnify ? () => setActive(!active) : undefined}
+                    style={{width: size, height: size}}
+                    >
+                    {PinContent}
+                    </div>
+            )}
+
+            
+        </>
     );
 }
